@@ -49,15 +49,21 @@ def posts_bot():
 				api.update_status(tweet)
 				posts_cache.append(post.id)
 
+def restart():
+    print('--> restarting')
+    os.execv(__file__, sys.argv)
+
 while True:
 	for f, mtime in WATCHED_FILES_MTIMES:
 		if getmtime(f) != mtime:
-			print('--> restarting')
-			os.execv(__file__, sys.argv)
+			restart()
 		else:
-			posts_bot()
-			comments_bot()
-			time.sleep(60)
+			try:
+			    posts_bot()
+			    comments_bot()
+			    time.sleep(60)
+			except ConnectionError as e:
+			    restart()
 
 ###TO DO LIST###
 #add posts to the mailing list by bitcoin experts?
