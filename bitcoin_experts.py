@@ -6,6 +6,7 @@ import tweepy
 import os
 import sys
 from os.path import getmtime
+from requests.exceptions import ConnectionError
 
 WATCHED_FILES = [__file__]
 WATCHED_FILES_MTIMES = [(f, getmtime(f)) for f in WATCHED_FILES]
